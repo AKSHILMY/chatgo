@@ -1,3 +1,8 @@
+<div align="left">
+  <p>
+    <img src="https://img.shields.io/badge/Project%20Level-Basic-brightgreen" alt="Project Level: Basic">
+  </p>
+</div>
 <div align="center">
   <h1>CHATGO 🤖</h1>
   <p>
