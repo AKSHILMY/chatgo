@@ -14,7 +14,7 @@
 
 ## 📝 Overview
 
-Chatgo is a full-stack web application that provides a chatbot interface accessible only to authenticated users. The project is built with a Go backend that handles user authentication and serves the chat logic, and a modern JavaScript frontend for a responsive user experience.
+Chatgo is a full-stack web application that provides a chatbot interface accessible only to authenticated users. The project is built with a Go backend that handles user authentication and serves the chat logic, and a modern React frontend for a responsive user experience.
 
 ## ✨ Features
 

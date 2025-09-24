@@ -8,8 +8,8 @@ import (
 	utilties "github.com/uBuildIt/GoLang/chatGO/pkg/utilities"
 )
 
-func CreateUser(username, email, password string) bool {
-	user := models.User{Username: username, Email: email, Password: password}
+func CreateUser(username, email, password, imageUrl string) bool {
+	user := models.User{Username: username, Email: email, Password: password, ImageUrl: imageUrl}
 	result := database.DB.Create(&user)
 	if result.Error != nil {
 		fmt.Println("❗️Error creating user:", result.Error)
@@ -23,7 +23,7 @@ func GetUserByUsernameOrEmail(userNameOrEmail string) (models.User, bool) {
 	result := database.DB.Where("username = ?", userNameOrEmail).Or("email = ?", userNameOrEmail).First(&user)
 	var success bool = true
 	if result.Error != nil {
-		fmt.Println("❗️User not found:", result.Error)
+		fmt.Printf("❗️User %s not found: %s", userNameOrEmail, result.Error)
 		success = false
 	}
 

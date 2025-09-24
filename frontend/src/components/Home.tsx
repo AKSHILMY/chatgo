@@ -2,7 +2,8 @@ import ChatComponent from "./Chat/ChatComponent.tsx";
 import {useEffect, useState} from "react";
 // import SecretKeyLogin from "./Auth/SecretKeyLogin.tsx";
 import LoginOverlay from "./Auth/LoginOverlay.tsx";
-import {getLocalStorageItem} from "../utilities/lib/localStorage.tsx";
+import {getLocalStorageItem, setLocalStorageItem} from "../utilities/lib/localStorage.tsx";
+import getConfig from "../services/api/config.tsx";
 
 
 const Home = () => {
@@ -19,8 +20,15 @@ const Home = () => {
 
     useEffect(() => {
         const token = getLocalStorageItem("token")
+        // const username = getLocalStorageItem("email")
         if (token) {
-            setIsLoggedIn(true)
+            setIsLoggedIn(true);
+            // getConfig({queryParams: {username: username}}).then((res) => {
+            //     setLocalStorageItem("config", res.data.data);
+            //     console.log(res.data)
+            // }).catch((err) => {
+            //     console.log(err);
+            // })
         }
         setIsCheckingAuth(false);
     }, [])
