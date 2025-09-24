@@ -68,4 +68,4 @@ Make sure you have the following installed on your system:
     # Run the frontend development server
     npm run dev
     ```
-    The frontend application will open in your browser, usually at `http://localhost:3000`.
+    The frontend application will open in your browser, usually at `http://localhost:5173`.
