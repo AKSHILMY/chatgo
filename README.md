@@ -45,6 +45,8 @@ Make sure you have the following installed on your system:
     # Install Go dependencies
     go mod tidy
 
+    # Rename the file `.env.example` to `.env` and fill in the required environment variables
+    
     # Run the backend server
     go run main.go
     ```
