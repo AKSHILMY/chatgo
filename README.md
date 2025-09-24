@@ -1,7 +1,7 @@
 <div align="center">
   <h1>CHATGO 🤖</h1>
   <p>
-    <strong>A secure, real-time chatbot application with user authentication.</strong>
+    <strong>A real-time chatbot application.</strong>
   </p>
 </div>
 
