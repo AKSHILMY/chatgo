@@ -4,9 +4,9 @@
     <img src="https://img.shields.io/badge/Version-0.0.1-blue" alt="Version: 0.0.1">
   </p>
 </div>
-
 <div align="center">
-  <h1>CHATGO 🤖</h1>
+  <img width="250" height="530" alt="CHATGO Chat Interface" src="https://github.com/user-attachments/assets/666676b7-a647-4566-a095-8844a00ed0dd" />
+  <h1>CHATGO 🤖</h1>
 </div>
 
 ## 📝 Overview
