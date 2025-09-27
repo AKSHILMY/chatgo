@@ -72,10 +72,10 @@ func (pool *Pool) Start() {
 				fmt.Printf("Client %s dropped from the pool\n", _client.Username)
 			}
 		case msg := <-pool.Broadcast:
+			msg.Text = ai_filters.ProcessSafeLangFilter(msg.Text)
 			for client, active := range pool.Clients {
 				if active {
 					msg.Incoming = true
-					msg.Text = ai_filters.ProcessSafeLangFilter(msg.Text)
 					if client.Id == msg.SenderID {
 						continue
 					}
