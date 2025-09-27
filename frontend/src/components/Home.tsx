@@ -20,15 +20,8 @@ const Home = () => {
 
     useEffect(() => {
         const token = getLocalStorageItem("token")
-        // const username = getLocalStorageItem("email")
         if (token) {
             setIsLoggedIn(true);
-            // getConfig({queryParams: {username: username}}).then((res) => {
-            //     setLocalStorageItem("config", res.data.data);
-            //     console.log(res.data)
-            // }).catch((err) => {
-            //     console.log(err);
-            // })
         }
         setIsCheckingAuth(false);
     }, [])
@@ -41,9 +34,8 @@ const Home = () => {
                     </div>
                 ) : (
                     <>
-                        <ChatComponent key={chatKey} />
+                        <ChatComponent key={chatKey} isLoggedIn={isLoggedIn}/>
                         {!isLoggedIn && (
-                            // <SecretKeyLogin onUnlock={() => setIsLoggedIn(true)}/>
                             <LoginOverlay onLoginSuccess={handleLogin}/>
                         )}
                     </>

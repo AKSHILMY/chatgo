@@ -41,6 +41,8 @@ func serverWebSocket(pool *websocket.Pool, w http.ResponseWriter, r *http.Reques
 		Conn: conn,
 		Pool: pool,
 	}
+
+	log.Printf("WebSocket Connection Request: %s (%s)", client.Username, username)
 	pool.Register <- client
 	go client.Read()
 	// websocket.Reader(ws)

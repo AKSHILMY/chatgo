@@ -7,17 +7,24 @@ import ChatBar from "./ChatBar.tsx";
 import { getLocalStorageItem } from "../../utilities/lib/localStorage.tsx";
 // import AppConfig from "../../utilities/schema.tsx";
 
-const ChatComponent = () => {
+interface ChatComponentProps {
+    isLoggedIn: boolean;
+}
+
+const ChatComponent = (props : ChatComponentProps) => {
     const socketRef = useRef<WebSocket | null>(null);
     const [history, setHistory] = useState<Message[]>([]);
     const [isConnected, setIsConnected] = useState<boolean>(false);
     const [systemMessage, setSystemMessage] = useState<string | null>(null);
-    const username = getLocalStorageItem('email')  as string; 
+    const username = getLocalStorageItem('username')  as string; 
     const imageUrl = getLocalStorageItem('image_url') as string;
 
     useEffect(() => {
+        if (!props.isLoggedIn) {
+            return;
+        }
         socketRef.current = createWebsocket({
-            url: import.meta.env.VITE_CHATGO_WEBSOCKET_URL,
+            url: `${import.meta.env.VITE_CHATGO_WEBSOCKET_URL}?username=${username}`,
             onMessage: onMessage,
             onOpen: onOpen,
             onClose: onClose,
@@ -74,7 +81,7 @@ const ChatComponent = () => {
         <div className="flex items-center justify-center h-screen bg-gray-100">
             <div className="flex flex-col w-full max-w-2xl h-5/6 mx-auto rounded-lg overflow-hidden shadow-xl bg-white grid grid-rows-[auto_1fr_auto]"> {/* Changed flex-col to grid and defined grid-rows */}
                 <div className="row-start-1 col-start-1 z-10">
-                    <ChatBar groupName={username} groupImage={imageUrl}/>
+                    <ChatBar userName={username} userImage={imageUrl}/>
                     <p className="text-xs text-gray-500 italic text-center">{systemMessage}</p>
                 </div>
                 <div className="row-start-2 col-start-1 overflow-y-auto">
