@@ -47,14 +47,14 @@ func (pool *Pool) Start() {
 				}
 				client.Conn.WriteJSON(ChatMessage{
 					Id:            uuid.NewString(),
-					Text:          fmt.Sprintf("Client %s connected to the pool\n", _client.Pool.Identity.Id),
-					Timestamp:     time.Now().String(), // TODO: Timezone
+					Text:          fmt.Sprintf("Client %s connected to the pool\n", _client.Username),
+					Timestamp:     time.Now().UTC().String(), // TODO: Timezone
 					Incoming:      true,
 					SenderID:      utilties.SYSTEM_SENDER_ID,
 					SystemMessage: utilties.SYSTEM_CONNECT_MESSAGE,
 				})
+				fmt.Printf("Client %s connected to the pool\n", _client.Username)
 			}
-			fmt.Printf("Client ID: %s join the pool %s.\n", _client.Id, _client.Pool.Identity.Id)
 		case _client := <-pool.Unregister:
 			delete(pool.Clients, _client)
 			for client := range pool.Clients {
@@ -63,19 +63,19 @@ func (pool *Pool) Start() {
 				}
 				client.Conn.WriteJSON(ChatMessage{
 					Id:            uuid.NewString(),
-					Text:          fmt.Sprintf("Client %s dropped from the pool\n", _client.Pool.Identity.Id),
-					Timestamp:     time.Now().String(), // TODO: Timezone
+					Text:          fmt.Sprintf("Client %s dropped from the pool\n", _client.Username),
+					Timestamp:     time.Now().UTC().String(), // TODO: Timezone
 					Incoming:      true,
 					SenderID:      utilties.SYSTEM_SENDER_ID,
 					SystemMessage: utilties.SYSTEM_DISCONNECT_MESSAGE,
 				})
+				fmt.Printf("Client %s dropped from the pool\n", _client.Username)
 			}
-			fmt.Printf("Client ID: %s dropped from the pool %s.\n", _client.Id, _client.Pool.Identity.Id)
 		case msg := <-pool.Broadcast:
+			msg.Text = ai_filters.ProcessSafeLangFilter(msg.Text)
 			for client, active := range pool.Clients {
 				if active {
 					msg.Incoming = true
-					msg.Text = ai_filters.ProcessSafeLangFilter(msg.Text)
 					if client.Id == msg.SenderID {
 						continue
 					}
@@ -85,7 +85,7 @@ func (pool *Pool) Start() {
 						if err != nil {
 							log.Println("Error in Writing Websocket Message : ", err)
 						} else {
-							fmt.Printf("Broadcasted Msg ID : %s to pool %s: \n", msg.Id, client.Pool.Identity.Id)
+							fmt.Printf("Broadcasted Msg ID : %s to pool %s: \n", msg.Id, client.Pool.Identity.Name)
 						}
 					} else {
 						log.Println("Error in JSONIFY Websocket REPLY Message : ", err)

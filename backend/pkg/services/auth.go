@@ -33,7 +33,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	}
 	hashedPassword, _ := utilities.HashPassword(user.Password)
-	success := cruds.CreateUser(user.Username, user.Email, hashedPassword)
+	success := cruds.CreateUser(user.Username, user.Email, hashedPassword, user.ImageUrl)
 	res := schemas.APIResponse{}
 	if !success {
 		res.Data = nil
@@ -48,12 +48,12 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
+func GetUser(w http.ResponseWriter, r *http.Request) schemas.AuthUser {
 	query := r.URL.RawQuery
 	request, err := url.ParseQuery(query)
 	if err != nil {
 		http.Error(w, "Error parsing query", http.StatusBadRequest)
-		return
+		return schemas.AuthUser{}
 	}
 	var input string
 	username := request.Get("username")
@@ -65,6 +65,42 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	}
 	user, _ := cruds.GetUserByUsernameOrEmail(input)
 	fmt.Println("User Obtained : ", user)
+	return schemas.AuthUser{
+		Username: user.Username,
+		Email:    user.Email,
+		Password: user.Password,
+		ImageUrl: user.ImageUrl,
+	}
+}
+
+func GetConfig(w http.ResponseWriter, r *http.Request) schemas.APIResponse {
+	res := schemas.APIResponse{}
+	res.Error = false
+	query := r.URL.RawQuery
+	request, err := url.ParseQuery(query)
+	if err != nil {
+		http.Error(w, "Error parsing query", http.StatusBadRequest)
+		res.Error = true
+		res.Message = "Error parsing query"
+		return res
+	}
+	var input string
+	username := request.Get("username")
+	email := request.Get("username")
+	if username != "" {
+		input = username
+	} else if email != "" {
+		input = email
+	}
+	user, _ := cruds.GetUserByUsernameOrEmail(input)
+	res.Message = "Config obtained successfully!"
+	res.Data = map[string]string{
+		"username":  user.Username,
+		"email":     user.Email,
+		"image_url": user.ImageUrl,
+	}
+	return res
+
 }
 
 func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
@@ -103,9 +139,12 @@ func AuthenticateUser(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("❗️No username found")
 		return
 	}
-
+	auth_user, _ := cruds.GetUserByUsernameOrEmail(input)
 	res.Data = map[string]string{
-		"token": tokenString,
+		"token":     tokenString,
+		"username":  auth_user.Username,
+		"email":     auth_user.Email,
+		"image_url": auth_user.ImageUrl,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	response, _ := json.Marshal(res)
@@ -237,6 +276,20 @@ func UserOp(private bool) http.HandlerFunc {
 
 		case "POST":
 			CreateUser(w, r)
+		default:
+			http.Error(w, "Method Not Allowed!", http.StatusMethodNotAllowed)
+		}
+	}
+}
+
+func ConfigOp(private bool) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if private {
+			ProtectedHandler(w, r)
+		}
+		switch r.Method {
+		case "GET":
+			GetConfig(w, r)
 		default:
 			http.Error(w, "Method Not Allowed!", http.StatusMethodNotAllowed)
 		}

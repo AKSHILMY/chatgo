@@ -2,7 +2,8 @@ import ChatComponent from "./Chat/ChatComponent.tsx";
 import {useEffect, useState} from "react";
 // import SecretKeyLogin from "./Auth/SecretKeyLogin.tsx";
 import LoginOverlay from "./Auth/LoginOverlay.tsx";
-import {getLocalStorageItem} from "../utilities/lib/localStorage.tsx";
+import {getLocalStorageItem, setLocalStorageItem} from "../utilities/lib/localStorage.tsx";
+import getConfig from "../services/api/config.tsx";
 
 
 const Home = () => {
@@ -20,7 +21,7 @@ const Home = () => {
     useEffect(() => {
         const token = getLocalStorageItem("token")
         if (token) {
-            setIsLoggedIn(true)
+            setIsLoggedIn(true);
         }
         setIsCheckingAuth(false);
     }, [])
@@ -33,9 +34,8 @@ const Home = () => {
                     </div>
                 ) : (
                     <>
-                        <ChatComponent key={chatKey} />
+                        <ChatComponent key={chatKey} isLoggedIn={isLoggedIn}/>
                         {!isLoggedIn && (
-                            // <SecretKeyLogin onUnlock={() => setIsLoggedIn(true)}/>
                             <LoginOverlay onLoginSuccess={handleLogin}/>
                         )}
                     </>

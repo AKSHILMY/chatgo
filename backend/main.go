@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/google/uuid"
@@ -17,15 +18,31 @@ import (
 )
 
 func serverWebSocket(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
+	query := r.URL.RawQuery
+	request, err := url.ParseQuery(query)
+	if err != nil {
+		http.Error(w, "Error parsing query", http.StatusBadRequest)
+		return
+	}
+	username := request.Get("username")
 	conn, err := websocket.Upgrade(w, r)
 	if err != nil {
 		log.Println(err)
 	}
 	client := &websocket.Client{
-		Id:   uuid.NewString(),
+		Id: uuid.NewString(),
+		Username: func() string {
+			if username != "" {
+				return username
+			} else {
+				return "Anonymous"
+			}
+		}(),
 		Conn: conn,
 		Pool: pool,
 	}
+
+	log.Printf("WebSocket Connection Request: %s (%s)", client.Username, username)
 	pool.Register <- client
 	go client.Read()
 	// websocket.Reader(ws)
@@ -58,6 +75,7 @@ func setupAuthRoutes(router *mux.Router) {
 
 	router.HandleFunc("/user", services.UserOp(true))
 	router.HandleFunc("/auth/login", services.AuthLogin(false))
+	router.HandleFunc("/config", services.ConfigOp(false))
 
 	/*
 		http.HandleFunc("/pool", func(w http.ResponseWriter, r *http.Request) {

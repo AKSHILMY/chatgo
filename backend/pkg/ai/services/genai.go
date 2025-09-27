@@ -31,7 +31,7 @@ func ProcessPrompt(prompt, message string) string {
 	}
 	defer client.Close()
 
-	model := client.GenerativeModel("gemini-1.5-flash")
+	model := client.GenerativeModel("gemini-2.5-flash-lite")
 	model.SystemInstruction = genai.NewUserContent(genai.Text(prompt))
 	resp, err := model.GenerateContent(ctx, genai.Text(message))
 	if err != nil {

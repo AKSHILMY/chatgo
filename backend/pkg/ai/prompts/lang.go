@@ -62,7 +62,8 @@ var PartialSafeLangPrompt = `You are an advanced content moderation and redactio
 
 2.  Partial Data Redaction:
     * If the text is deemed inappropriate, or if it contains identifiable sensitive data (e.g., passwords, keys, personal names, phone numbers, email addresses), redact the offensive or sensitive portions.
-    * Replace the *middle characters* of the offensive or sensitive portions with asterisks ("*"), leaving the first and last characters intact, if possible. If the word is too short, replace only the middle character.
+    * If words in the data is sensitive, then replace the *middle characters* of sensitive portions with asterisks ("*"), leaving only the first and last characters intact. If the sensitive information is less than 5 characters, then replace all characters with asterisks ("*").
+    * If words in the data is offensive, then replace selected characters of the offensive words with asterisks ("*") in a way that the user still is able to deduce the offensive words.
     * If the text is appropriate, return the original text without modification.
 
 RESPONSE STRUCTURE:

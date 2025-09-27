@@ -26,6 +26,9 @@ const LoginOverlay: React.FC<LoginOverlayProps> = ({onLoginSuccess}) => {
                 toast.error(res.data.message);
             } else {
                 setLocalStorageItem("token", res.data.data.token);
+                setLocalStorageItem("username", res.data.data.username);
+                setLocalStorageItem("email", res.data.data.username);
+                setLocalStorageItem("image_url", res.data.data.image_url);
                 onLoginSuccess();
             }
         } catch (err: any) {
