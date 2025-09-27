@@ -1,16 +1,13 @@
 <div align="left">
   <p>
     <img src="https://img.shields.io/badge/Project%20Level-Basic-brightgreen" alt="Project Level: Basic">
-  </p>
-</div>
-<div align="center">
-  <h1>CHATGO 🤖</h1>
-  <p>
-    <strong>A real-time chatbot application.</strong>
+    <img src="https://img.shields.io/badge/Version-0.0.1-blue" alt="Version: 0.0.1">
   </p>
 </div>
 
----
+<div align="center">
+  <h1>CHATGO 🤖</h1>
+</div>
 
 ## 📝 Overview
 
@@ -18,10 +15,10 @@ Chatgo is a full-stack web application that provides a chatbot interface accessi
 
 ## ✨ Features
 
-- **User Authentication**: Secure sign-up and login system.
+- **User Authentication**: Secure login system
 - **JWT-Based Security**: Uses JSON Web Tokens (JWT) for managing user sessions securely.
 - **Real-time Chat**: An interactive chatbot interface for authenticated users.
-- **RESTful API**: A well-structured backend API built with Go.
+- **RESTful API**: A backend API built with Go.
 
 
 ## 🚀 Getting Started
