@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     server: {
         host: '0.0.0.0', // Allows external access
-        port: 5173,       // Port used by the Vite server
+        port: 3434,       // Port used by the Vite server
         allowedHosts: [
             '.ngrok-free.app',  // Allow all ngrok free URLs
         ],

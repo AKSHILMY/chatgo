@@ -14,6 +14,7 @@ import (
 	"github.com/joho/godotenv"
 	database "github.com/uBuildIt/GoLang/chatGO/pkg/database"
 	"github.com/uBuildIt/GoLang/chatGO/pkg/services"
+	"github.com/uBuildIt/GoLang/chatGO/pkg/services/cloudinary"
 	"github.com/uBuildIt/GoLang/chatGO/pkg/websocket"
 )
 
@@ -62,6 +63,10 @@ func intializeEnv(mode string) {
 		fmt.Println("📝 Env loaded from prod environment")
 	}
 
+	if err := cloudinary.InitCloudinary(); err != nil {
+		log.Println("Error initializing Cloudinary:", err)
+	}
+
 }
 
 func intializeDB() {
@@ -76,6 +81,7 @@ func setupAuthRoutes(router *mux.Router) {
 	router.HandleFunc("/user", services.UserOp(true))
 	router.HandleFunc("/auth/login", services.AuthLogin(false))
 	router.HandleFunc("/config", services.ConfigOp(false))
+	router.HandleFunc("/api/upload", services.UploadHandler)
 
 	/*
 		http.HandleFunc("/pool", func(w http.ResponseWriter, r *http.Request) {
@@ -115,7 +121,7 @@ func main() {
 		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
 	)(router)
 
-	err := http.ListenAndServe(":8080", corsHandler)
+	err := http.ListenAndServe(":8787", corsHandler)
 	if err != nil {
 		fmt.Println("❗️Error starting server:", err)
 	}

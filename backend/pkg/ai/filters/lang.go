@@ -8,6 +8,9 @@ import (
 )
 
 func ProcessSafeLangFilter(message string) string {
+	if message == "" {
+		return ""
+	}
 	log.Printf("Processing safe language filter for message: %s", message)
 	return ai_services.ProcessPrompt(prompts.PartialSafeLangPrompt, message)
 }

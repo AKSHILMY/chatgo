@@ -1,1 +1,128 @@
 @import "tailwindcss";
+
+/* Audio Player General Overrides */
+.rhap_container {
+    box-shadow: none !important;
+    padding: 8px 10px !important;
+    border-radius: 0.5rem !important;
+    background-color: transparent !important;
+}
+
+.rhap_main-controls-button {
+    transition: color 0.2s ease !important;
+}
+
+/* Sent Message Styles (Teal Background) */
+.audio-player-sent .rhap_container {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.audio-player-sent .rhap_time {
+    color: #ccfbf1 !important;
+    /* teal-100 */
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+.audio-player-sent .rhap_main-controls-button {
+    color: white !important;
+}
+
+.audio-player-sent .rhap_play-pause-button {
+    font-size: 2rem !important;
+}
+
+/* The full track background */
+.audio-player-sent .rhap_progress-bar {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 9999px !important;
+}
+
+/* The filled part (what has played) */
+.audio-player-sent .rhap_progress-filled {
+    background-color: white !important;
+    border-radius: 9999px !important;
+}
+
+/* The buffered part */
+.audio-player-sent .rhap_download-progress {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border-radius: 9999px !important;
+}
+
+.audio-player-sent .rhap_progress-indicator {
+    background: white !important;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+    width: 12px !important;
+    height: 12px !important;
+    top: -4px !important;
+    /* Center vertially */
+}
+
+.audio-player-sent .rhap_volume-button {
+    color: #ccfbf1 !important;
+}
+
+.audio-player-sent .rhap_volume-indicator {
+    background: white !important;
+}
+
+
+/* Received Message Styles (White Background) */
+.audio-player-received .rhap_container {
+    background-color: #f3f4f6 !important;
+    /* gray-100 */
+    border: 1px solid #e5e7eb !important;
+    /* gray-200 */
+}
+
+.audio-player-received .rhap_time {
+    color: #6b7280 !important;
+    /* gray-500 */
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+.audio-player-received .rhap_main-controls-button {
+    color: #14b8a6 !important;
+    /* teal-500 */
+}
+
+/* The full track background */
+.audio-player-received .rhap_progress-bar {
+    background-color: #e5e7eb !important;
+    /* gray-200 */
+    border-radius: 9999px !important;
+}
+
+/* The filled part (what has played) */
+.audio-player-received .rhap_progress-filled {
+    background-color: #14b8a6 !important;
+    /* teal-500 */
+    border-radius: 9999px !important;
+}
+
+/* The buffered part */
+.audio-player-received .rhap_download-progress {
+    background-color: #d1d5db !important;
+    /* gray-300 */
+    border-radius: 9999px !important;
+}
+
+.audio-player-received .rhap_progress-indicator {
+    background: #14b8a6 !important;
+    width: 12px !important;
+    height: 12px !important;
+    top: -4px !important;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.audio-player-received .rhap_volume-button {
+    color: #9ca3af !important;
+    /* gray-400 */
+}
+
+.audio-player-received .rhap_volume-indicator {
+    background: #14b8a6 !important;
+}
