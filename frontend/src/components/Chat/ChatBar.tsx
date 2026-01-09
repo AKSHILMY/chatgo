@@ -1,5 +1,6 @@
 import {Power} from 'react-feather';
 import React from "react";
+import SafeLangIcon from '../Config/SafeLangFilter';
 
 interface ChatBarProps {
     userName?: string
@@ -31,9 +32,12 @@ const ChatBar = ({userImage: uImage, userName: uName}: ChatBarProps) => {
                 </h2>
             </div>
 
-            <button className="text-white hover:text-green-200">
-                <Power onClick={handleLogOut} className="h-6 w-6"/>
-            </button>
+            <div className="flex items-center space-x-2">
+                <button className="text-white hover:text-green-200">
+                    <Power onClick={handleLogOut} className="h-6 w-6"/>
+                </button>
+                <SafeLangIcon/>
+            </div>
         </div>
     );
 };
