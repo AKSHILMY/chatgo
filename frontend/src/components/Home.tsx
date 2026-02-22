@@ -2,9 +2,7 @@ import ChatComponent from "./Chat/ChatComponent.tsx";
 import {useEffect, useState} from "react";
 // import SecretKeyLogin from "./Auth/SecretKeyLogin.tsx";
 import LoginOverlay from "./Auth/LoginOverlay.tsx";
-import {getLocalStorageItem, setLocalStorageItem} from "../utilities/lib/localStorage.tsx";
-import getConfig from "../services/api/config.tsx";
-
+import {getLocalStorageItem} from "../utilities/lib/localStorage.tsx";
 
 const Home = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
